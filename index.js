@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path')
+const {ConnectionString} = require('connection-string');
 
 const app = express();
 require('dotenv').config();
@@ -21,9 +22,25 @@ const { DATABASE_URL } = process.env;
 
 console.log(DATABASE_URL)
 
+const cs = new ConnectionString(DATABASE_URL);
+
+function get_PostgreSQL_connection() {
+    return {
+        host: cs.hostname,
+        port: cs.port,
+        database: cs.path?.[0],
+        user: cs.user,
+        password: cs.password,
+        ssl: cs.params?.ssl ? Boolean(cs.params.ssl) : undefined,
+        application_name: cs.params?.application_name
+
+        /* etc, other parameters supported by the driver */
+
+    };
+}
+
 const pgp = PgPromise({});
-pgp.pg.defaults.ssl = true;
-const db = pgp({DATABASE_URL});
+const db = pgp(get_PostgreSQL_connection());
 
 const API = APIRoutes(db);
 
