@@ -19,6 +19,8 @@ app.get('/', (req, res) => {
 
 const { DATABASE_URL } = process.env;
 
+console.log(DATABASE_URL)
+
 const pgp = PgPromise({});
 pgp.pg.defaults.ssl = true;
 const db = pgp({DATABASE_URL});
