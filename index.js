@@ -31,6 +31,7 @@ function get_PostgreSQL_connection() {
         database: cs.path?.[0],
         user: cs.user,
         password: cs.password,
+        ssl: true,
         application_name: cs.params?.application_name
 
         /* etc, other parameters supported by the driver */
@@ -39,8 +40,8 @@ function get_PostgreSQL_connection() {
 }
 
 const pgp = PgPromise({});
-pgp.pg.defaults.ssl = true;
-const db = pgp(get_PostgreSQL_connection);
+
+const db = pgp(get_PostgreSQL_connection());
 
 const API = APIRoutes(db);
 
