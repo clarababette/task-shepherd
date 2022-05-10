@@ -17,9 +17,21 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
+let ssl = null;
+if (process.env.NODE_ENV === 'development') {
+   ssl = {rejectUnauthorized: false};
+}
+
 const { DATABASE_URL } = process.env;
 const pgp = PgPromise({});
-const db = pgp(DATABASE_URL);
+
+
+const config = {
+   connectionString: DATABASE_URL,
+   max: 30,
+   ssl:ssl
+};
+const db = pgp(config);
 
 const API = APIRoutes(db);
 
