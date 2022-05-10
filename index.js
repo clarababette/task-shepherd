@@ -25,9 +25,7 @@ const pgp = PgPromise({});
 
 const db = pgp({
   DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: true,
 });
 
 const API = APIRoutes(db);
