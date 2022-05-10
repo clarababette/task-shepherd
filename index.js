@@ -31,7 +31,7 @@ function get_PostgreSQL_connection() {
         database: cs.path?.[0],
         user: cs.user,
         password: cs.password,
-        ssl: true,
+        ssl: {rejectUnauthorized: false},
         application_name: cs.params?.application_name
 
         /* etc, other parameters supported by the driver */
