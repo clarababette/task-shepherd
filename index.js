@@ -19,14 +19,9 @@ app.get('/', (req, res) => {
 
 const { DATABASE_URL } = process.env;
 
-const cn = {
-    connectionString: DATABASE_URL,
-  max: 30,
-    ssl:true
-};
-
 const pgp = PgPromise({});
-const db = pgp(cn);
+pgp.pg.defaults.ssl = true;
+const db = pgp({DATABASE_URL});
 
 const API = APIRoutes(db);
 
