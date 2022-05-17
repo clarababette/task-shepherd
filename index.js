@@ -33,7 +33,12 @@ function get_PostgreSQL_connection() {
 }
 
 const pgp = PgPromise({});
-const db = pgp(DATABASE_URL);
+const db = pgp({
+  DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 //const db = pgp(get_PostgreSQL_connection());
 
 const API = APIRoutes(db);
