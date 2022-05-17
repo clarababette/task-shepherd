@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path')
-const {ConnectionString} = require('connection-string');
+const { ConnectionString } = require('connection-string');
+const axios = require('axios')
 
 const app = express();
 require('dotenv').config();
@@ -14,14 +15,9 @@ const PORT = process.env.PORT || 4017;
 app.use(express.static(path.join(__dirname, 'dist')));
 
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+
 
 const { DATABASE_URL } = process.env;
-
-console.log(DATABASE_URL)
-
 const cs = new ConnectionString(DATABASE_URL);
 
 function get_PostgreSQL_connection() {
@@ -31,11 +27,8 @@ function get_PostgreSQL_connection() {
         database: cs.path?.[0],
         user: cs.user,
         password: cs.password,
-        ssl: {rejectUnauthorized: false},
+        ssl: DATABASE_URL.includes('localhost') ? false : {rejectUnauthorized: false},
         application_name: cs.params?.application_name
-
-        /* etc, other parameters supported by the driver */
-
     };
 }
 
@@ -49,6 +42,51 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+const client_id = process.env.GITHUB_CLIENT_ID
+const client_secret = process.env.GITHUB_CLIENT_SECRET
+
+app.get('/login/github', (req, res) => {
+  const redirect_uri = 'http://localhost:4017/login/auth'
+  res.redirect(
+    `https://github.com/login/oauth/authorize?client_id=${
+      process.env.GITHUB_CLIENT_ID
+    }&redirect_uri=${redirect_uri}`
+  )
+})
+
+async function getAccessToken({ code, client_id, client_secret }) {
+  const token = await axios.post(`https://github.com/login/oauth/access_token?client_id=${client_id}&client_secret=${client_secret}&code=${code}`).then(res => {
+    const text = res;
+    let params = new URLSearchParams(text);
+    const data = params.get("data");
+    params = new URLSearchParams(data);
+    return params.get('access_token')
+  }).catch((err) => {
+    return err
+  })
+  
+  return token
+}
+
+async function fetchGitHubUser(token) {
+  
+  return await axios.get("https://api.github.com/user", {
+    headers: {
+      Authorization: "token " + token
+    }
+  }).then(res => {return res.data}).catch(err => { return err});
+  
+}
+
+app.get('/login/auth', async (req, res) => {
+  const code = req.query.code
+  const access_token = await getAccessToken({ code, client_id, client_secret })
+  const user = await fetchGitHubUser(access_token);
+  res.json(user)
+})
+
+
 
 app.get('/api/assign/task/:taskId', API.getCodersWithStatus);
 app.get('/api/coders', API.getCoders);
@@ -65,6 +103,11 @@ app.post('/api/create-task', API.createTask);
 app.post('/api/assign/task/:taskId', API.assignTask);
 
 app.put('/api/edit-task/:taskId', API.editTask);
+
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
