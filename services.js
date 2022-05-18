@@ -88,7 +88,8 @@ function APIRoutes(db) {
 
   const updateURL = async (req, res) => {
     const { taskId } = req.params;
-    const urls = req.body.URLs;
+    const urls = req.body.urls;
+    console.log(urls)
     const result = await db.many(
       'update assigned_tasks set urls=$1 where id=$2 returning urls',
       [JSON.stringify(urls), taskId],
