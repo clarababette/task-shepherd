@@ -23,12 +23,21 @@ function APIRoutes(db) {
     res.json(result);
   };
 
+  const getCoderTask = async (req, res) => {
+    const { taskId } = req.params;
+    const query = 'select coders.first_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
+    const result = await db.many(query, taskId);
+    res.json(result);
+  };
+
   const getCoderTasks = async (req, res) => {
     const { coderId } = req.params;
-    const query = 'select coders.first_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where coder_id=$1';
+    const query = 'select assigned_tasks.id, tasks.name from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where coder_id=$1';
     const result = await db.many(query, coderId);
     res.json(result);
   };
+
+
 
   const getAssignedTasks = async (req, res) => {
     const query = 'select coders.first_name, coders.last_name, tasks.name as task_name, assigned_tasks.date_assigned, assigned_tasks.id, assigned_tasks.status from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id';
@@ -151,6 +160,7 @@ function APIRoutes(db) {
     getCoders,
     getTasks,
     getCoderTasks,
+    getCoderTask,
     getAssignedTasks,
     getComments,
     requestFeedback,
@@ -159,6 +169,7 @@ function APIRoutes(db) {
     assignTask,
     getTaskWithCoders,
     editTask,
+
   };
 }
 
