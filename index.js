@@ -92,7 +92,7 @@ app.get('/api/assign/task/:taskId', API.getCodersWithStatus);
 app.get('/api/coders', API.getCoders);
 app.get('/api/tasks', API.getTasks);
 app.get('/api/tasks/coder/:coderId', API.getCoderTasks);
-app.get('/api/tasks/coder/:taskId', API.getCoderTask);
+app.get('/api/task/coder/:taskId', API.getCoderTask);
 app.get('/api/assigned_tasks', API.getAssignedTasks);
 app.get('/api/task/:taskId/comments', API.getComments);
 app.get('/api/edit-task/:taskId', API.getTaskWithCoders);
