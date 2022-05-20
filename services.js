@@ -137,7 +137,7 @@ function APIRoutes(db) {
     const { taskId } = req.params;
     const details = await db.many('select * from tasks where id = $1', [taskId]);
     const coders = await db.many(
-      'select coders.id, coders.first_name, coders.last_name, assigned.status from coders left join (select coder_id, status from assigned_tasks where task_id = $1) as assigned on coders.id = assigned.coder_id',
+      'select coders.id, coders.first_name, coders.last_name, assigned.id as assigned_id , assigned.status from coders left join (select coder_id, status, id from assigned_tasks where task_id = $1) as assigned on coders.id = assigned.coder_id',
       taskId,
     );
 
