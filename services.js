@@ -25,7 +25,7 @@ function APIRoutes(db) {
 
   const getCoderTask = async (req, res) => {
     const { taskId } = req.params;
-    const query = 'select coders.first_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
+    const query = 'select coders.first_name, coders.last_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
     const result = await db.many(query, taskId);
     res.json(result);
   };
@@ -85,7 +85,7 @@ function APIRoutes(db) {
     const { comment } = req.body;
     await db.none(
       'update assigned_tasks set status = $1, status_timestamp = localtimestamp where id = $2',
-      ['Feedback Requested', taskId],
+      ['Feedback requested', taskId],
     );
     const result = await db.many(
       'insert into coder_comments (assigned_task_id, comment, timestamp) values ($1,$2, localtimestamp) returning *',
