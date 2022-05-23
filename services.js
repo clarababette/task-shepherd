@@ -2,6 +2,14 @@
 const moment = require('moment');
 
 function APIRoutes(db) {
+
+
+  const getUser = async (req, res) => {
+    const email = req.body.email;
+    const result = await db.any('select * from coders where email = $1', email)
+    res.json(result)
+  }
+
   const getCodersWithStatus = async (req, res) => {
     const { taskId } = req.params;
     const result = await db.many(
@@ -169,7 +177,7 @@ function APIRoutes(db) {
     assignTask,
     getTaskWithCoders,
     editTask,
-
+    getUser
   };
 }
 

@@ -89,6 +89,7 @@ app.get('/login/auth', async (req, res) => {
 
 
 app.get('/api/assign/task/:taskId', API.getCodersWithStatus);
+app.get('/api/user', API.getUser);
 app.get('/api/coders', API.getCoders);
 app.get('/api/tasks', API.getTasks);
 app.get('/api/tasks/coder/:coderId', API.getCoderTasks);
@@ -97,7 +98,6 @@ app.get('/api/assigned_tasks', API.getAssignedTasks);
 app.get('/api/task/:taskId/comments', API.getComments);
 app.get('/api/edit-task/:taskId', API.getTaskWithCoders);
 app.get('/api/task/coders/:taskId', API.getTaskWithCoders);
-
 app.post('/api/task/:task_id/requestFeedback', API.requestFeedback);
 app.post('/api/task/:taskId/url_update', API.updateURL);
 app.post('/api/create-task', API.createTask);
