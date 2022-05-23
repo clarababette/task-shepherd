@@ -106,9 +106,9 @@ app.post('/api/assign/task/:taskId', API.assignTask);
 app.put('/api/edit-task/:taskId', API.editTask);
 
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
