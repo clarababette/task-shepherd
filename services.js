@@ -9,7 +9,7 @@ function APIRoutes(db) {
     const result = await db.any('select * from coders where email = $1', email)
     console.log(result)
     res.json(result)
-  }
+  };
 
   const getCodersWithStatus = async (req, res) => {
     const { taskId } = req.params;
