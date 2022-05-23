@@ -7,6 +7,7 @@ function APIRoutes(db) {
   const getUser = async (req, res) => {
     const email = req.params.email;
     const result = await db.any('select * from coders where email = $1', email)
+    console.log(result)
     res.json(result)
   }
 
