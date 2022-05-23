@@ -11,11 +11,11 @@ function APIRoutes(db) {
     if (result.length < 1) {
       result = await db.any('select * from mentors where email = $1', email);
       if (result.length > 0) {
-        user = [...result];
+        user = result[0];
         user.role = 'mentor'
 }
     } else {
-      user = [...result];
+      user = result[0];
         user.role = 'coder'
     }
     res.json(user)
