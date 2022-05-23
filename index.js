@@ -89,7 +89,7 @@ app.get('/login/auth', async (req, res) => {
 
 
 app.get('/api/assign/task/:taskId', API.getCodersWithStatus);
-app.get('/api/user', API.getUser);
+app.get('/api/user/login', API.getUser);
 app.get('/api/coders', API.getCoders);
 app.get('/api/tasks', API.getTasks);
 app.get('/api/tasks/coder/:coderId', API.getCoderTasks);
