@@ -72,7 +72,7 @@ function APIRoutes(db) {
         taskId,
       );
       const mentorComments = await db.many(
-        'select mentors.first_name, mentor_comments.* from mentor_comments join mentors on mentor_comments.mentor_id=mentors.id where assigned_task_id = $1',
+        'select mentors.first_name, mentor_comments.* from mentor_comments join mentors on mentor_comments.mentor_id=mentors.id where mentor_comments.assigned_task_id = $1',
         taskId,
       );
 
@@ -116,13 +116,14 @@ function APIRoutes(db) {
 
   const updateFeedback = async (req, res) => {
     const { taskID, mentorID, comment, complete } = req.body;
+    console.log(req.body)
     const status = complete == true ? 'Completed':'Feedback updated'
     await db.none(
       'update assigned_tasks set status = $1, status_timestamp = localtimestamp where id = $2',
       [status, taskID],
     );
     const result = await db.many(
-      'insert into mentor_comments (assigned_task_id, comment, timestamp, mentor_id) values ($1,$2, localtimestamp, $3) returning *',
+      'insert into mentor_comments (assigned_task_id, comment, mentor_id, timestamp) values ($1,$2,$3,localtimestamp ) returning *',
       [taskID, comment, mentorID],
     );
     result[0].timestamp = moment(result[0].timestamp).fromNow();
