@@ -121,7 +121,7 @@ function APIRoutes(db) {
       [complete ? 'Completed':'Feedback requested', taskID],
     );
     const result = await db.many(
-      'insert into coder_comments (assigned_task_id, comment, timestamp, mentor_id) values ($1,$2, localtimestamp, $3) returning *',
+      'insert into mentor_comments (assigned_task_id, comment, timestamp, mentor_id) values ($1,$2, localtimestamp, $3) returning *',
       [taskID, comment, mentorID],
     );
     result[0].timestamp = moment(result[0].timestamp).fromNow();
