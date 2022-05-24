@@ -116,7 +116,7 @@ function APIRoutes(db) {
 
   const updateFeedback = async (req, res) => {
     const { taskID, mentorID, comment, complete } = req.body;
-    const status = complete== true ? 'Completed':'Feedback requested'
+    const status = complete == true ? 'Completed':'Feedback updated'
     await db.none(
       'update assigned_tasks set status = $1, status_timestamp = localtimestamp where id = $2',
       [status, taskID],
