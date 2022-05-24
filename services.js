@@ -48,6 +48,8 @@ function APIRoutes(db) {
     const result = await db.many(query, taskId);
     if (!result[0].urls) {
       result[0].urls = result[0].required_urls.map(url => ({'description': url}))
+    } else {
+      result[0].urls = JSON.parse(result[0].urls);
     }
     res.json(result[0]);
   };
