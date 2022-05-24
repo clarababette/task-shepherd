@@ -116,9 +116,10 @@ function APIRoutes(db) {
 
   const updateFeedback = async (req, res) => {
     const { taskID, mentorID, comment, complete } = req.body;
+    const status = complete== true ? 'Completed':'Feedback requested'
     await db.none(
       'update assigned_tasks set status = $1, status_timestamp = localtimestamp where id = $2',
-      [complete ? 'Completed':'Feedback requested', taskID],
+      [status, taskID],
     );
     const result = await db.many(
       'insert into mentor_comments (assigned_task_id, comment, timestamp, mentor_id) values ($1,$2, localtimestamp, $3) returning *',
