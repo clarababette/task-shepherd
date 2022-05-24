@@ -47,7 +47,7 @@ function APIRoutes(db) {
     const query = 'select coders.first_name, coders.last_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
     const result = await db.many(query, taskId);
     if (!result[0].urls) {
-      result[0].urls = result[0].required_urls.map(url => {description:url})
+      result[0].urls = result[0].required_urls.map(url => ({'description': url}))
     }
     res.json(result[0]);
   };
