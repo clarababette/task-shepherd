@@ -103,7 +103,7 @@ app.post('/api/task/:taskId/url_update', API.updateURL);
 app.post('/api/create-task', API.createTask);
 app.post('/api/user/login', API.getUser);
 app.post('/api/assign/task/:taskId', API.assignTask);
-app.post('/api/update/feedback', API.assignTask);
+app.post('/api/update/feedback', API.updateFeedback);
 
 app.put('/api/edit-task/:taskId', API.editTask);
 
