@@ -114,6 +114,20 @@ function APIRoutes(db) {
     res.json(result);
   };
 
+  const updateFeedback = async (req, res) => {
+    const { taskID, mentorID, comment, complete } = req.body;
+    await db.none(
+      'update assigned_tasks set status = $1, status_timestamp = localtimestamp where id = $2',
+      [complete ? 'Completed':'Feedback requested', taskID],
+    );
+    const result = await db.many(
+      'insert into coder_comments (assigned_task_id, comment, timestamp, mentor_id) values ($1,$2, localtimestamp, $3) returning *',
+      [taskID, comment, mentorID],
+    );
+    result[0].timestamp = moment(result[0].timestamp).fromNow();
+    res.json(result);
+  };
+
   const updateURL = async (req, res) => {
     const { taskId } = req.params;
     const urls = req.body.urls;
@@ -188,7 +202,8 @@ function APIRoutes(db) {
     assignTask,
     getTaskWithCoders,
     editTask,
-    getUser
+    getUser,
+    updateFeedback
   };
 }
 
