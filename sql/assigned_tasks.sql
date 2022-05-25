@@ -7,7 +7,8 @@ create table assigned_tasks (
 	date_assigned TIMESTAMP,
 	URLs text,
   foreign key (task_id) REFERENCES tasks(id),
-  foreign key (coder_id) REFERENCES coders(id)
+  foreign key (coder_id) REFERENCES coders(id),
+	unique (task_id, coder_id)
 );
 
 insert into assigned_tasks (task_id, coder_id, status, status_timestamp, date_assigned) values (11, 2, 'Assigned', '2022-05-06T21:48:49Z', '2022-05-12T23:15:24Z');

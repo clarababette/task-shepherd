@@ -51,6 +51,7 @@ function APIRoutes(db) {
     } else {
       result[0].urls = JSON.parse(result[0].urls);
     }
+    result[0].info_urls = JSON.parse(result[0].info_urls);
     res.json(result[0]);
   };
 
