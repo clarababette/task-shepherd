@@ -152,7 +152,7 @@ function APIRoutes(db) {
     } = req.body;
     const result = await db.many(
       'insert into tasks (name, required_urls, info_urls, description) values ($1,$2,$3,$4) returning id, name',
-      [name, coderURLs, infoURLs, description],
+      [name, coderURLs, JSON.stringify(infoURLs), description],
     );
 
     res.json(result);
