@@ -194,11 +194,17 @@ function APIRoutes(db) {
   const getTaskWithCoders = async (req, res) => {
     const { taskId } = req.params;
     const details = await db.many('select * from tasks where id = $1', [taskId]);
-    const coders = await db.many(
+    let coders = await db.many(
       'select coders.id, coders.first_name, coders.last_name, assigned.id as assigned_id , assigned.status from coders left join (select coder_id, status, id from assigned_tasks where task_id = $1) as assigned on coders.id = assigned.coder_id',
       taskId,
     );
-
+    coders = coders.map(coder => {
+      return {
+        id: coder.id,
+        name: `${coder.first_name} ${coder.last_name}`,
+        assigned: coder.assigned_id == null ? false : true
+      }
+    })
     res.json({ details, coders });
   };
 
