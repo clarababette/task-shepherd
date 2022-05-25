@@ -50,7 +50,7 @@ function APIRoutes(db) {
               id: assigned.task_id,
               name: assigned.task_name,
             };
-            newType[status] = [{coder: `${assigned.first_name} ${assigned.first_name}`, 'assigned_id': assigned.id}]
+            newType[status] = [{coder: `${assigned.first_name} ${assigned.last_name}`, 'assigned_id': assigned.id}]
             taskTypes = [...taskTypes, newType];
       } else {
         taskTypes[type][status] ? taskTypes[type][status] = [...taskTypes[type][status], {coder: `${assigned.first_name} ${assigned.first_name}`, 'assigned_id': assigned.id}] : taskTypes[type][status] = [{coder: `${assigned.first_name} ${assigned.first_name}`, 'assigned_id': assigned.id}]
