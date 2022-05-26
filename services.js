@@ -212,11 +212,11 @@ function APIRoutes(db) {
   const editTask = async (req, res) => {
     const { taskId } = req.params;
     const {
-      name, description, infoURLs, coderURLs,
-    } = req.body;
+      name, description, required_urls, info_urls,
+    } = req.body.details;
     await db.none(
       'update tasks set name=$1, required_urls=$2, info_urls=$3, description=$4 where id=$5',
-      [name, coderURLs, infoURLs, description, taskId],
+      [name, required_urls, JSON.stringify(info_urls), description, taskId],
     );
     res.send('done');
   };
