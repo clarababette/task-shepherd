@@ -205,6 +205,7 @@ function APIRoutes(db) {
         assigned: coder.assigned_id == null ? false : true
       }
     })
+    details.info_urls = JSON.parse(details.info_urls)
     res.json({ details, coders });
   };
 
