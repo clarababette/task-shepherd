@@ -89,11 +89,11 @@ function APIRoutes(db) {
   const getComments = async (req, res) => {
     try {
       const { taskId } = req.params;
-      const coderComments = await db.many(
+      const coderComments = await db.any(
         'select * from coder_comments where assigned_task_id = $1',
         taskId,
       );
-      const mentorComments = await db.many(
+      const mentorComments = await db.any(
         'select mentors.first_name, mentor_comments.* from mentor_comments join mentors on mentor_comments.mentor_id=mentors.id where assigned_task_id = $1',
         taskId,
       );
