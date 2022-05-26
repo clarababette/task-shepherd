@@ -42,8 +42,6 @@ function APIRoutes(db) {
 
     const groupedTasks = result.reduce((taskTypes, assigned) => {
       let type = taskTypes.findIndex((task) => task.id == assigned.task_id);
-      console.log(taskTypes)
-      console.log(type)
           const status = assigned.status;
       if (type == -1) {
             const newType = {
@@ -118,7 +116,8 @@ function APIRoutes(db) {
       });
 
       res.json(allComments);
-    } catch {
+    } catch (err) {
+      console.log(err)
       res.send('no comments yet');
     }
   };
