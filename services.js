@@ -73,7 +73,7 @@ function APIRoutes(db) {
 
   const getCoderTasks = async (req, res) => {
     const { coderId } = req.params;
-    const query = 'select assigned_tasks.id, tasks.name from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where coder_id=$1';
+    const query = 'select assigned_tasks.id, tasks.name, assigned_tasks.status from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where coder_id=$1';
     const result = await db.many(query, coderId);
     res.json(result);
   };
