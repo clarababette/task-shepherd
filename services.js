@@ -123,7 +123,6 @@ function APIRoutes(db) {
       res.json(allComments);
     } catch (err) {
       console.log(err)
-      res.send('no comments yet');
     }
   };
 
