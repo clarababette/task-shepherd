@@ -64,6 +64,7 @@ function APIRoutes(db) {
     const result = await db.many(query, taskId);
     if (result[0].description == '') { delete result[0].description };
     result[0].info_urls = JSON.parse(result[0].info_urls);
+    if (!result[0].info_urls[0].description) { delete result[0].info_urls }
     if (!result[0].required_urls[0]) {
       delete result[0].required_urls;
       delete result[0].urls
