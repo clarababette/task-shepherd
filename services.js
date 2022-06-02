@@ -76,7 +76,7 @@ function APIRoutes(db) {
             task.urls = [...task.urls, {'description': descrpt}]
           }
         });
-    }}
+    }
     res.json(task);
   };
 
