@@ -63,7 +63,7 @@ function APIRoutes(db) {
     const query = 'select coders.first_name, coders.last_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
     const result = await db.many(query, taskId);
     const task = result[0]
-    const { description, info_urls, urls, required_urls } = task
+    let { description, info_urls, urls, required_urls } = task
     if (description == '') { delete task.description };
     info_urls = JSON.parse(info_urls);
     if (!info_urls[0].description) { delete info_urls }
