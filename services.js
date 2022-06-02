@@ -11,9 +11,11 @@ function APIRoutes(db) {
     if (result.length < 1) {
       result = await db.any('select * from mentors where email = $1', email);
       if (result.length > 0) {
+        user = result[0];
         user.role = 'mentor'
 }
     } else {
+      user = result[0];
         user.role = 'coder'
     }
     res.json(user)
@@ -56,7 +58,7 @@ function APIRoutes(db) {
     res.json(groupedTasks);
   };
 
-  const getCoderTask = async (req, res) => {
+const getCoderTask = async (req, res) => {
     const { taskId } = req.params;
     const query = 'select coders.first_name, coders.last_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
     const result = await db.many(query, taskId);
@@ -139,7 +141,7 @@ function APIRoutes(db) {
       'insert into coder_comments (assigned_task_id, comment, timestamp) values ($1,$2, localtimestamp) returning *',
       [taskId, comment],
     );
-    task.timestamp = moment(task.timestamp).fromNow();
+    result[0].timestamp = moment(result[0].timestamp).fromNow();
     res.json(result);
   };
 
@@ -154,7 +156,7 @@ function APIRoutes(db) {
       'insert into mentor_comments (assigned_task_id, comment, timestamp, mentor_id) values ($1,$2, localtimestamp, $3) returning *',
       [taskID, comment, mentorID],
     );
-    task.timestamp = moment(task.timestamp).fromNow();
+    result[0].timestamp = moment(result[0].timestamp).fromNow();
     res.json(result);
   };
 
