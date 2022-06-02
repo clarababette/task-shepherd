@@ -11,11 +11,11 @@ function APIRoutes(db) {
     if (result.length < 1) {
       result = await db.any('select * from mentors where email = $1', email);
       if (result.length > 0) {
-        user = result[0];
+        user = task;
         user.role = 'mentor'
 }
     } else {
-      user = result[0];
+      user = task;
         user.role = 'coder'
     }
     res.json(user)
@@ -62,19 +62,26 @@ function APIRoutes(db) {
     const { taskId } = req.params;
     const query = 'select coders.first_name, coders.last_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
     const result = await db.many(query, taskId);
-    if (result[0].description == '') { delete result[0].description };
-    result[0].info_urls = JSON.parse(result[0].info_urls);
-    if (!result[0].info_urls[0].description) { delete result[0].info_urls }
-    if (!result[0].required_urls[0]) {
-      delete result[0].required_urls;
-      delete result[0].urls
+    const task = result[0]
+    const { description, info_urls, urls, required_urls } = task
+    if (description == '') { delete task.description };
+    info_urls = JSON.parse(info_urls);
+    if (!info_urls[0].description) { delete info_urls }
+    if (!required_urls[0]) {
+      delete required_urls;
+      delete urls
     } else {
-      if (!result[0].urls) {
-      result[0].urls = result[0].required_urls.map(url => ({'description': url}))
+      if (!urls) {
+      urls = required_urls.map(url => ({'description': url}))
     } else {
-      result[0].urls = JSON.parse(result[0].urls);
+        urls = JSON.parse(urls);
+        required_urls.forEach(descrpt => {
+          if (!urls.find(url => url.description == descrpt)) {
+            urls = [...urls, {'description': descrpt}]
+          }
+        });
     }}
-    res.json(result[0]);
+    res.json(task);
   };
 
   const getCoderTasks = async (req, res) => {
@@ -138,7 +145,7 @@ function APIRoutes(db) {
       'insert into coder_comments (assigned_task_id, comment, timestamp) values ($1,$2, localtimestamp) returning *',
       [taskId, comment],
     );
-    result[0].timestamp = moment(result[0].timestamp).fromNow();
+    task.timestamp = moment(task.timestamp).fromNow();
     res.json(result);
   };
 
@@ -153,7 +160,7 @@ function APIRoutes(db) {
       'insert into mentor_comments (assigned_task_id, comment, timestamp, mentor_id) values ($1,$2, localtimestamp, $3) returning *',
       [taskID, comment, mentorID],
     );
-    result[0].timestamp = moment(result[0].timestamp).fromNow();
+    task.timestamp = moment(task.timestamp).fromNow();
     res.json(result);
   };
 
