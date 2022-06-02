@@ -63,21 +63,17 @@ function APIRoutes(db) {
     const query = 'select coders.first_name, coders.last_name, assigned_tasks.*, tasks.name, tasks.required_urls, tasks.info_urls, tasks.description from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where assigned_tasks.id=$1';
     const result = await db.many(query, taskId);
     const task = result[0]
-    let { description, info_urls, urls, required_urls } = task
-    if (description == '') { delete task.description };
-    info_urls = JSON.parse(info_urls);
-    if (!info_urls[0].description) { delete info_urls }
-    if (!required_urls[0]) {
-      delete required_urls;
-      delete urls
+    if (task.description == '') { delete task.description };
+    task.info_urls = JSON.parse(task.info_urls);
+    if (!task.info_urls[0].description) { delete task.info_urls }
+    if (!task.required_urls[0]) {
+      delete task.required_urls;
+      delete task.urls
     } else {
-      if (!urls) {
-      urls = required_urls.map(url => ({'description': url}))
-    } else {
-        urls = JSON.parse(urls);
-        required_urls.forEach(descrpt => {
-          if (!urls.find(url => url.description == descrpt)) {
-            urls = [...urls, {'description': descrpt}]
+        task.urls = JSON.parse(task.urls);
+        task.required_urls.forEach(descrpt => {
+          if (!task.urls.find(url => url.description == descrpt)) {
+            task.urls = [...task.urls, {'description': descrpt}]
           }
         });
     }}
