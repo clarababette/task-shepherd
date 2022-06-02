@@ -70,9 +70,9 @@ function APIRoutes(db) {
       delete task.required_urls;
       delete task.urls
     } else {
-        task.urls = JSON.parse(task.urls);
+        task.urls = !task.urls ? [] : JSON.parse(task.urls);
         task.required_urls.forEach(descrpt => {
-          if (!task.urls || !task.urls.find(url => url.description == descrpt)) {
+          if (!task.urls.find(url => url.description == descrpt)) {
             task.urls = [...task.urls, {'description': descrpt}]
           }
         });
