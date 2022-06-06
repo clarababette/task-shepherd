@@ -47,7 +47,7 @@ const client_id = process.env.GITHUB_CLIENT_ID
 const client_secret = process.env.GITHUB_CLIENT_SECRET
 
 app.get('/login/github', (req, res) => {
-  const redirect_uri = 'http://localhost:4017/login/auth'
+  const redirect_uri = '/'
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${
       process.env.GITHUB_CLIENT_ID
