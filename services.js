@@ -147,7 +147,9 @@ const getCoderTask = async (req, res) => {
 
   const updateFeedback = async (req, res) => {
     const { taskID, mentorID, comment, complete } = req.body;
-    const status = complete == true ? 'Completed':'Feedback updated'
+    const status = complete == true ? 'Completed' : 'Feedback updated'
+    console.log(req.body)
+    console.log(status)
     await db.none(
       'update assigned_tasks set status = $1, status_timestamp = localtimestamp where id = $2',
       [status, taskID],
