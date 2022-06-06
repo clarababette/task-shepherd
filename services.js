@@ -147,7 +147,7 @@ const getCoderTask = async (req, res) => {
 
   const updateFeedback = async (req, res) => {
     const { taskID, mentorID, comment, complete } = req.body;
-    const status = complete == true ? 'Completed' : 'Feedback updated'
+    const status = complete == 'true' ? 'Completed' : 'Feedback updated'
     console.log(req.body)
     console.log(status)
     await db.none(
