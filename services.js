@@ -82,7 +82,7 @@ const getCoderTask = async (req, res) => {
 
   const getCoderTasks = async (req, res) => {
     const { coderId } = req.params;
-    const query = 'select assigned_tasks.id, tasks.name, assigned_tasks.status from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where coder_id=$1 order by assigned_tasks.status_timestamp';
+    const query = 'select assigned_tasks.id, tasks.name, assigned_tasks.status from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where coder_id=$1 order by assigned_tasks.status_timestamp desc';
     const result = await db.many(query, coderId);
     res.json(result);
   };
