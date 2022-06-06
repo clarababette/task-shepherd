@@ -47,7 +47,7 @@ const client_id = process.env.GITHUB_CLIENT_ID
 const client_secret = process.env.GITHUB_CLIENT_SECRET
 
 app.get('/login/github', (req, res) => {
-  const redirect_uri = 'https://gwi-task-manager.herokuapp.com/'
+  const redirect_uri = 'https://gwi-task-manager.herokuapp.com/login/auth'
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${
       process.env.GITHUB_CLIENT_ID
