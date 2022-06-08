@@ -204,7 +204,7 @@ const getCoderTask = async (req, res) => {
     const { taskId } = req.params;
     const details = await db.many('select * from tasks where id = $1', [taskId]);
     let coders = await db.many(
-      'select coders.id, coders.first_name, coders.last_name, assigned.id as assigned_id, assigned.status, assigned.urls from coders left join (select coder_id, status, id from assigned_tasks where task_id = $1) as assigned on coders.id = assigned.coder_id',
+      'select coders.id, coders.first_name, coders.last_name, assigned.id as assigned_id, assigned.status, assigned.urls from coders left join (select coder_id, status, id, urls from assigned_tasks where task_id = $1) as assigned on coders.id = assigned.coder_id',
       taskId,
     );
     coders = coders.map(coder => {
