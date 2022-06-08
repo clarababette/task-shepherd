@@ -220,10 +220,8 @@ const getCoderTask = async (req, res) => {
   const getProject = async (req, res) => {
     const { taskId } = req.params;
     const details = await db.many('select * from tasks where id = $1', [taskId]);
-    let coders = await db.many(
-      'select coders.id, coders.first_name, coders.last_name, assigned.id as assigned_id, assigned.status, assigned.urls from coders left join (select coder_id, status, id, urls from assigned_tasks where task_id = $1) as assigned on coders.id = assigned.coder_id',
-      taskId,
-    );
+    const query = 'select coders.first_name, coders.last_name, assigned_tasks.id, assigned_tasks.status, assigned_tasks.urls from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id';
+    const coders = await db.many(query);
     details[0].info_urls = JSON.parse(details[0].info_urls)
     res.json({ details:details[0] , coders });
   };
