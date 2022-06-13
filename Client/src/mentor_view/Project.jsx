@@ -107,7 +107,7 @@ const columns = [
         '& .odd': { backgroundColor: colors.blue.light }
         }} />
     <Dialog open={open} onClose={handleClose}>
-        <DialogContent><EditTask taskID={project.id} close={handleClose} /></DialogContent>
+        <DialogContent><EditTask close={handleClose} /></DialogContent>
       </Dialog>
       <Dialog  className='review-card' open={reviewCard} onClose={handleCloseReview}>
         <DialogContent ><ReviewCard close={handleCloseReview} /></DialogContent>
