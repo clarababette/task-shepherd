@@ -109,9 +109,9 @@ app.post('/api/update/feedback', API.updateFeedback);
 app.put('/api/edit-task/:taskId', API.editTask);
 
 
-app.get('/*', (req, res) => {
-  res.redirect('/');
-});
+// app.get('/*', (req, res) => {
+//   res.redirect('/');
+// });
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
