@@ -14,7 +14,9 @@ const PORT = process.env.PORT || 4017;
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-
+app.get('/', (req, res) => {
+  res.sendFile('index.html', path.join(__dirname, 'dist' ));
+});
 
 
 const { DATABASE_URL } = process.env;
