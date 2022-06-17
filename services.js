@@ -40,22 +40,22 @@ function APIRoutes(db) {
       'select tasks.name as task_name, tasks.id as task_id, assigned_tasks.status from assigned_tasks right join tasks on assigned_tasks.task_id = tasks.id',
     );
 
-    // const groupedTasks = result.reduce((taskTypes, assigned) => {
-    //   let type = taskTypes.findIndex((task) => task.id == assigned.task_id);
-    //       const status = assigned.status;
-    //   if (type == -1) {
-    //         const newType = {
-    //           id: assigned.task_id,
-    //           name: assigned.task_name,
-    //         };
-    //         newType[status] = [{coder: `${assigned.first_name} ${assigned.last_name}`, 'assigned_id': assigned.id}]
-    //         taskTypes = [...taskTypes, newType];
-    //   } else {
-    //     taskTypes[type][status] ? taskTypes[type][status] = [...taskTypes[type][status], {coder: `${assigned.first_name} ${assigned.last_name}`, 'assigned_id': assigned.id}] : taskTypes[type][status] = [{coder: `${assigned.first_name} ${assigned.last_name}`, 'assigned_id': assigned.id}]
-    //       }
-    //       return taskTypes;
-    // },[])
-    res.json(result);
+    const groupedTasks = result.reduce((taskTypes, assigned) => {
+      let type = taskTypes.findIndex((task) => task.id == assigned.task_id);
+          const status = assigned.status;
+      if (type == -1) {
+            const newType = {
+              id: assigned.task_id,
+              name: assigned.task_name,
+            };
+            newType[status] = 1
+            taskTypes = [...taskTypes, newType];
+      } else {
+        taskTypes[type][status] ? taskTypes[type][status]++ : taskTypes[type][status] = 1
+          }
+          return taskTypes;
+    },[])
+    res.json(groupedTasks);
   };
 
 const getCoderTask = async (req, res) => {
