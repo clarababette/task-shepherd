@@ -26,7 +26,7 @@ export const TaskProvider = ({children}) => {
       });
   }, [update]);
 
-  setInterval(() => { setUpdate(true)}, 60000)
+  setInterval(() => { setUpdate(true)}, 600000)
 
   return (
     <MentorContext.Provider
