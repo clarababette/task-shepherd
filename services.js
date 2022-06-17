@@ -48,9 +48,9 @@ function APIRoutes(db) {
               id: assigned.task_id,
               name: assigned.task_name,
             };
-            newType[status] = 1
+            if(status !== null) {newType[status] = 1}
             taskTypes = [...taskTypes, newType];
-      } else {
+      } else if(status !== null) {
         taskTypes[type][status] ? taskTypes[type][status]++ : taskTypes[type][status] = 1
           }
           return taskTypes;
