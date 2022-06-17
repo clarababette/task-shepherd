@@ -12,10 +12,7 @@ const APIRoutes = require('./services');
 
 const PORT = process.env.PORT || 4017;
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/Server/dist/index.html'));
-});
-
+app.use(express.static(path.join(__dirname, 'Server/dist')));
 
 
 const { DATABASE_URL } = process.env;
