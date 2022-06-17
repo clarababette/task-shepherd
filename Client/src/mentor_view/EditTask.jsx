@@ -39,17 +39,18 @@ function EditTask({ close }) {
 
 
   const handleSubmitEditTask = async (e) => { 
+    console.log('tast')
     e.preventDefault();
     if (name != '') {
       await axios
-        .put(`/edit-task/${taskID}`, {
+        .put(`/edit-task/${project.id}`, {
           name, description, required_urls: coderURLs.map(link => {if(link.selected == true){return link.url}}), info_urls: infoURLs,
         })
         .then(async (res) => {
           console.log('edited')
           const assign = coders.filter(coder => !coder.assigned && coder.assign)
           await axios
-            .post(`/assign/task/${taskID}`, { coders: assign })
+            .post(`/assign/task/${project.id}`, { coders: assign })
             .then(() => {
               close()
             });
@@ -151,7 +152,7 @@ function EditTask({ close }) {
           </IconButton>
         </Box>
         
-      </Box>
+     
        <div>
           <Typography sx={{ marginTop: '1em' }} >Assign to:</Typography>
           {coders.map((coder) => (
@@ -179,7 +180,8 @@ function EditTask({ close }) {
             )}
           </div>
         ))}
-      </div>
+        </div>
+        <div>
       <Button
           variant='contained'
           type='submit'
@@ -192,6 +194,8 @@ function EditTask({ close }) {
           Save Task
         </Button>
     </div>
+      </Box>
+      </div>
   );
 }
 
