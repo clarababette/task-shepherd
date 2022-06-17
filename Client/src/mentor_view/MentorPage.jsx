@@ -1,4 +1,4 @@
-import { useContext, Suspense } from 'react';
+import React, { useContext, Suspense } from 'react';
 import ProjectContext from '../context/ProjectContext';
 import Project from './Project'
 import ProjectNav from './ProjectNav';
@@ -20,9 +20,8 @@ function MentorPage() {
       }}
       >
         <Suspense fallback={loading}>
-
-        </Suspense>
       {!projectID && <Tasks />}
+        </Suspense>
       {projectID && <Project></Project>}
       
 
