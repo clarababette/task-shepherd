@@ -106,9 +106,9 @@ console.log(columns)
         </AccordionDetails>
       </Accordion>
       
-      <DataGrid onCellClick={handleCellClick} onRowDoubleClick={handleRowClick} rows={rows}  getRowClassName={(params) =>
+      <DataGrid columns={columns} onCellClick={handleCellClick} onRowDoubleClick={handleRowClick} rows={rows}  getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-        } columns={columns} sx={{ margin: '1rem 4rem', '& .Assigned': {
+        }  sx={{ margin: '1rem 4rem', '& .Assigned': {
           backgroundColor: getStatusColor('Assigned'),
         }, '& .Feedbackrequested': {
           backgroundColor: getStatusColor('Feedback requested'),
