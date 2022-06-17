@@ -12,6 +12,9 @@ const APIRoutes = require('./services');
 
 const PORT = process.env.PORT || 4017;
 
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
+});
 
 
 

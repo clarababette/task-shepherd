@@ -56,23 +56,36 @@ export default function Project() {
 
   const statuses = statusSummary()
   
-const subLinks = project.required_urls.map(link => {return { field: link, headerName: link,renderCell: (cellValues) => { return (
+const subLinks = !project.required_urls ? null : project.required_urls.map(link => {return { field: link, headerName: link,renderCell: (cellValues) => { return (
     <>
         {cellValues.row[link] && (<CheckIcon></CheckIcon>)}
   </>) } }})
 
+  console.log(project.required_urls);
+  console.log(subLinks)
+  
   const rows = coders.map(coder => {
+
     const links = {};
-    if(coder.urls) {
+    if (project.required_urls) {
+      project.required_urls.forEach(link => links[link] = '')
+    }
+    if(coder.urls && project.required_urls) {
     coder.urls.forEach(url => {if(project.required_urls.includes(url.description)){links[url.description] = url.address}})}
     return { id: coder.id, name: `${coder.first_name} ${coder.last_name}`, 'status': coder.status, ...links, activity:`${coder.status} ${coder.status_timestamp}`, dateAssigned: coder.date_assigned }
   });
 
-const columns = [
+const fixedColumns1 = [
   { field: 'name', headerName: 'Name', width:200 },
-  { field: 'status', headerName: 'Status', width: 200, cellClassName: (params) => (params.value.replace(' ','')) }, ...subLinks, { field: 'activity', headerName: 'Latest Activity', width: 250 }, { field:'dateAssigned', headerName: 'Date Assigned', width:150}
-];
+  { field: 'status', headerName: 'Status', width: 200, cellClassName: (params) => (params.value.replace(' ','')) }
+]
+const fixedColumns2 = [
+  { field: 'activity', headerName: 'Latest Activity', width: 250 }, { field:'dateAssigned', headerName: 'Date Assigned', width:150}
+]
 
+const columns = subLinks !== null ?  [...fixedColumns1, ...subLinks, ...fixedColumns2] : [...fixedColumns1, ...fixedColumns2];
+console.log(columns)
+  
   return (
     <div style={{ height: '500px', margin: '2rem', marginLeft: '240px', paddingTop:'64px' }}>
             <Accordion elevation={0}>

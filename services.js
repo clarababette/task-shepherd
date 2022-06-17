@@ -235,14 +235,6 @@ const getCoderTask = async (req, res) => {
     if (!task.info_urls[0].description) { delete task.info_urls }
     if (!task.required_urls[0]) {
       delete task.required_urls;
-      delete task.urls
-    } else {
-        task.urls = !task.urls ? [] : JSON.parse(task.urls);
-        task.required_urls.forEach(descrpt => {
-          if (!task.urls.find(url => url.description == descrpt)) {
-            task.urls = [...task.urls, {'description': descrpt}]
-          }
-        });
     }
 
     res.json({ details:task, coders });
