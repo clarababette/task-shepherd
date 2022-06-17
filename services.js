@@ -221,7 +221,7 @@ const getCoderTask = async (req, res) => {
     const { taskId } = req.params;
     const details = await db.many('select * from tasks where id = $1', [taskId]);
     const query = 'select coders.first_name, coders.last_name, assigned_tasks.* from assigned_tasks join coders on assigned_tasks.coder_id=coders.id join tasks on assigned_tasks.task_id = tasks.id where tasks.id = $1';
-    const coders = await db.many(query, [taskId]);
+    const coders = await db.any(query, [taskId]);
     coders.forEach(coder => {
       coder.urls = JSON.parse(coder.urls);
       coder.status_timestamp = moment(coder.status_timestamp).fromNow();

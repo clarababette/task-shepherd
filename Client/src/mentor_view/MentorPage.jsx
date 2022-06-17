@@ -12,7 +12,7 @@ function MentorPage() {
   const { projectID } = useContext(ProjectContext)
   return (
     <>
-      <ProjectNav></ProjectNav>
+      {projectID && <ProjectNav></ProjectNav>}
     <div
       className="mentor-container"
       sx={{

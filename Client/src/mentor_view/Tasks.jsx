@@ -23,7 +23,7 @@ export default function Tasks() {
       <Typography variant='h6'>All Projects</Typography>
       <Typography sx={{marginTop:'1em', marginLeft:'0.5em'}} variant='subtitle1'>Feedback requests</Typography>
       {requests.map(task => (
-        <Chip key={task.id} variant="outlined" sx={{ marginTop: '0.5em', marginLeft: '0.5em' }} avatar={<Avatar>{task['Feedback requested'].length}</Avatar>} label={task.name} onClick={()=> {setProjectID(task.id)}}/>
+        <Chip key={task.id} variant="outlined" sx={{ marginTop: '0.5em', marginLeft: '0.5em' }} avatar={<Avatar>{task['Feedback requested']}</Avatar>} label={task.name} onClick={()=> {setProjectID(task.id)}}/>
 ))}
       <Typography sx={{marginTop:'1em', marginLeft:'0.5em'}} variant='subtitle1'>Active Projects</Typography>
       {active.map(task => (
