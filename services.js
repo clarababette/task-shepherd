@@ -243,6 +243,8 @@ const getCoderTask = async (req, res) => {
   
 
   const editTask = async (req, res) => {
+    console.log('test')
+    console.log(req)
     const { taskId } = req.params;
     const {
       name, description, required_urls, info_urls,
