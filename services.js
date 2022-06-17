@@ -227,8 +227,25 @@ const getCoderTask = async (req, res) => {
       coder.status_timestamp = moment(coder.status_timestamp).fromNow();
       coder.date_assigned = moment(coder.date_assigned).format('D MMM YYYY')
     })
-    details[0].info_urls = JSON.parse(details[0].info_urls)
-    res.json({ details:details[0] , coders });
+    
+    const task = details[0];
+
+     if (task.description == '') { delete task.description };
+    task.info_urls = JSON.parse(task.info_urls);
+    if (!task.info_urls[0].description) { delete task.info_urls }
+    if (!task.required_urls[0]) {
+      delete task.required_urls;
+      delete task.urls
+    } else {
+        task.urls = !task.urls ? [] : JSON.parse(task.urls);
+        task.required_urls.forEach(descrpt => {
+          if (!task.urls.find(url => url.description == descrpt)) {
+            task.urls = [...task.urls, {'description': descrpt}]
+          }
+        });
+    }
+
+    res.json({ details:task, coders });
   };
 
   
