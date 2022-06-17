@@ -61,8 +61,6 @@ const subLinks = !project.required_urls ? null : project.required_urls.map(link 
         {cellValues.row[link] && (<CheckIcon></CheckIcon>)}
   </>) } }})
 
-  console.log(project.required_urls);
-  console.log(subLinks)
   
   const rows = coders.map(coder => {
 
@@ -84,7 +82,6 @@ const fixedColumns2 = [
 ]
 
 const columns = subLinks !== null ?  [...fixedColumns1, ...subLinks, ...fixedColumns2] : [...fixedColumns1, ...fixedColumns2];
-console.log(columns)
   
   return (
     <div style={{ height: '500px', margin: '2rem', marginLeft: '240px', paddingTop:'64px' }}>

@@ -247,8 +247,8 @@ const getCoderTask = async (req, res) => {
     const {
       name, description, required_urls, info_urls,
     } = req.body.details;
-    await db.none(
-      'update tasks set name=$1, required_urls=$2, info_urls=$3, description=$4 where id=$5',
+    await db.any(
+      'update tasks set name=$1, required_urls=$2, info_urls=$3, description=$4 where id=$5 returning *',
       [name, required_urls, JSON.stringify(info_urls), description, taskId],
     );
     res.send('done');

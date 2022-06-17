@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import ProjectContext from '../context/ProjectContext';
 
-function EditTask() {
+function EditTask({ close }) {
   const axios = AxiosInstance();
   const { project } = useContext(ProjectContext)
   const subLinks = ['GitHub Repo', 'GitHub Pages', 'Heroku', 'Travis CI'];
@@ -38,8 +38,7 @@ function EditTask() {
   if (!coders) return null;
 
 
-  const handleSubmitEditTask = async (e) => {
-      
+  const handleSubmitEditTask = async (e) => { 
     e.preventDefault();
     if (name != '') {
       await axios
@@ -47,6 +46,7 @@ function EditTask() {
           name, description, required_urls: coderURLs.map(link => {if(link.selected == true){return link.url}}), info_urls: infoURLs,
         })
         .then(async (res) => {
+          console.log('edited')
           const assign = coders.filter(coder => !coder.assigned && coder.assign)
           await axios
             .post(`/assign/task/${taskID}`, { coders: assign })
