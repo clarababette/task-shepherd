@@ -8,15 +8,18 @@ export const ProjectProvider = ({ children }) => {
   const [projectID, setProjectID] = useState();
   const [project, setProject] = useState();
   const [coders, setCoders] = useState();
+  const [updateProject, setUpdateProject] = useState(false)
 
   useEffect(async () => {
-    if(projectID){
+    if(projectID || updateProject){
       await axios.get(`project/${projectID}`).then((res) => {
         setProject({...res.data.details})
         setCoders([...res.data.coders])
+        setUpdateProject(false)
       });
+
 }
-  }, [projectID]);
+  }, [projectID, updateProject]);
 
   const statusSummary = () => {
     if(coders) {
@@ -30,7 +33,7 @@ export const ProjectProvider = ({ children }) => {
   return (
     <ProjectContext.Provider
       value={{
-        projectID, setProjectID, project, coders, statusSummary
+        projectID, setProjectID, project, coders, statusSummary, setUpdateProject
       }}
     >
       {children}

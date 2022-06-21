@@ -12,6 +12,7 @@ const theme = createTheme({
   palette: {
     primary: {main:'#2973c7'},
   },
+  shadows: Array(25).fill("none")
 });
 
 ReactDOM.render(

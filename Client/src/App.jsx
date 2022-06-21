@@ -14,7 +14,7 @@ function App() {
   const { setEmail, user } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
-  const loading = <Box sx={{width:'100vw', height: '100vh', backgroundColor: 'blue'}}><CircularProgress size={100} sx={{color: 'white', margin:'calc(50vh - 50px) calc(50vw - 50px)'}}></CircularProgress> </Box>
+  const loading = <Box sx={{width:'100vw', height: '100vh', backgroundColor: 'hsl(212, 66%, 27%)'}}><CircularProgress size={100} sx={{color: 'hsl(212, 66%, 67%)', margin:'calc(50vh - 50px) calc(50vw - 50px)'}}></CircularProgress> </Box>
 
   if (!user) {
     return (<form onSubmit={(e) => {
@@ -36,7 +36,7 @@ function App() {
   } else if (user.role == 'coder') {
     return(
     <Suspense fallback={loading}>
-    <Box className="app"> 
+    <Box className="app" sx={{height:'100vh', backgroundColor: colors.grey.light}}> 
       <Header name={`${user.first_name} ${user.last_name}`} role={ user.role}/>
       <CoderPage />
       </Box>

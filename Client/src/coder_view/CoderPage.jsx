@@ -4,7 +4,7 @@ import FocusTaskContext from '../context/FocusTaskContext';
 import AppContext from '../context/AppContext';
 import Task from './Task';
 import AxiosInstance from '../AxiosInstance';
-import { Box, List,  } from '@mui/material'
+import { Toolbar, List, Drawer  } from '@mui/material'
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -16,6 +16,8 @@ function CoderPage() {
   const { colors, getStatusColor } = useContext(AppContext);
   const [hovering, setHovering] = useState(false);
   
+
+  const drawerWidth = 240;
 
   useEffect(async () => {
   await AxiosInstance().get(`/tasks/coder/${user.id}`)
@@ -29,9 +31,20 @@ function CoderPage() {
   if (!tasks || !focusTaskID) return null;
 
   return (
-    
-    <Box sx={{display:'flex', overflow:'hidden', height:'100%',}}>
-      <Box sx={{width: '15rem', backgroundColor: colors.blue.dark, height:'auto'}}>
+    <>
+      <Drawer sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            backgroundColor: colors.blue.dark,
+        },
+        }}
+        variant="permanent"
+        anchor="left">
+        <Toolbar/>
+        <Divider />
       <List>
         {tasks.map((task) => (
           <ListItem button key={task.id} sx={{backgroundColor: focusTaskID == task.id  ? getStatusColor(task.status) : 'initial', "& p": {
@@ -42,9 +55,9 @@ function CoderPage() {
         ))}
       </List>
       <Divider />
-    </Box>
+    </Drawer>
       <Task/>
-      </Box>
+     </> 
   )
 }
 

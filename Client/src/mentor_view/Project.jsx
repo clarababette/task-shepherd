@@ -84,7 +84,7 @@ const fixedColumns2 = [
 const columns = subLinks !== null ?  [...fixedColumns1, ...subLinks, ...fixedColumns2] : [...fixedColumns1, ...fixedColumns2];
   
   return (
-    <div style={{ height: '500px', margin: '2rem', marginLeft: '240px', paddingTop:'64px' }}>
+    <div style={{ height: '500px', margin: '1rem 1rem 1rem 240px'}}>
             <Accordion elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

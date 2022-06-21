@@ -3,19 +3,25 @@ import AxiosInstance from '../AxiosInstance';
 import { useState, useContext } from 'react';
 import FocusTaskContext from '../context/FocusTaskContext';
 import UserContext from '../context/UserContext';
+import ProjectContext from '../context/ProjectContext';
+import MentorContext from '../context/MentorContext';
 
 function UpdateFeedback() {
   const axios = AxiosInstance();
   const [comment, setComment] = useState();
   const [complete, setComplete] = useState();
   const { user } = useContext(UserContext);
-  const { focusTaskID, setSent } = useContext(FocusTaskContext)
+  const { focusTaskID, setSent } = useContext(FocusTaskContext);
+  const { setUpdate } = useContext(MentorContext);
+  const { setUpdateProject } = useContext(ProjectContext);
 
 
   const submitFeedback = async () => {
     setSent('busy')
     await axios.post('/update/feedback', { taskID: focusTaskID, mentorID: user.id, comment, complete }).then(() => {
-      setSent(true)
+      setUpdate(true);
+      setUpdateProject(true);
+      setSent(true);
     })
   }
 

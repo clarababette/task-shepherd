@@ -16,7 +16,7 @@ function Task() {
 
   return (
     <>
-      <Box sx={{backgroundColor: colors.grey.light, width:'100%', padding:'1rem 2rem'}}>
+      <Box sx={{backgroundColor: colors.grey.light, margin: '0rem 0rem 0rem 240px', padding:'1rem 2rem'}}>
         <Card>
       <TaskHeader
         name={task.name}

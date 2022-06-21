@@ -32,7 +32,7 @@ function CreateTask() {
           name,
           description,
           infoURLs,
-          coderURLs: coderURLs.map(link => {if(link.selected == true){return link.url}}),
+          coderURLs: coderURLs.reduce((urls,url) => {if(url.selected == true){urls = [...urls, url.url]} return urls}, []),
         })
         .then((res) => {
           setNewTask({...res.data[0]});
