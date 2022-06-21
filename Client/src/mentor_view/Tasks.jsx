@@ -19,7 +19,8 @@ export default function Tasks() {
   const inactive = tasks.filter(task => !task['Feedback requested'] && !task['Assigned'] && !task['Feedback updated']);
   
   return (
-    <Box>
+    <Box sx={{ padding: '2rem', display: 'flex' }}>
+      <Box>
       <Typography variant='h6'>All Projects</Typography>
       <Typography sx={{marginTop:'1em', marginLeft:'0.5em'}} variant='subtitle1'>Feedback requests</Typography>
       {requests.map(task => (
@@ -34,9 +35,10 @@ export default function Tasks() {
         <Chip key={task.id} variant="outlined" sx={{marginTop:'0.5em', marginLeft:'0.5em'}} label={task.name} onClick={()=> {setProjectID(task.id)}}/>
       ))}
       
+      </Box>
       <Fab
         onClick={handleClickOpen}
-        sx={{ justifySelf: 'end', marginTop: '-80px', marginRight: '40px' }}
+        sx={{ justifySelf: 'end', alignSelf:'end' }}
       >
         <AddIcon />
       </Fab>
@@ -45,7 +47,7 @@ export default function Tasks() {
           {!newTask ? <CreateTask/>
             : <AssignTask />}
         </DialogContent>
-      </Dialog>
+        </Dialog>
     </Box>
   )
 }
