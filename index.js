@@ -77,7 +77,7 @@ async function fetchGitHubUser(token) {
   
 }
 
-app.get('/login/auth', async (req, res) => {
+app.get('/api/login/auth', async (req, res) => {
   if (!req.query.code) res.redirect('/login/github');
   const code = req.query.code
   const access_token = await getAccessToken({ code, client_id, client_secret })
