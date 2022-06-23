@@ -82,6 +82,7 @@ app.get('/api/login/auth', async (req, res) => {
   const code = req.query.code
   const access_token = await getAccessToken({ code, client_id, client_secret })
   const githubDetails = await fetchGitHubUser(access_token);
+  console.log(githubDetails)
   let user = [];
     let result = await db.any('select * from coders where github = $1', githubDetails.login)
     if (result.length < 1) {
