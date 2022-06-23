@@ -103,16 +103,12 @@ app.get('/user', async(req, res) => {
         user = result[0];
         user.role = 'mentor'
       }
-      res.json(req.session.user)
     } else {
       user = result[0];
         user.role = 'coder'
     }
     res.json(user)
-
-
-
-  } catch {
+ } catch {
     res.send('no user')
   }
 })
