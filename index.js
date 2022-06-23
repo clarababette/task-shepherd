@@ -91,7 +91,7 @@ app.get('/login/auth', async (req, res) => {
 })
 
 
-app.get('/user', (req, res) => {
+app.get('/user', async(req, res) => {
   try {
     res.json(req.session.user)
 
