@@ -82,7 +82,7 @@ app.get('/login/auth', async (req, res) => {
   
   const user = await fetchGitHubUser(access_token);
   // res.json(user)
- localStorage.setItem('user', JSON.stringify(user));
+ window.localStorage.setItem('user', JSON.stringify(user));
 
   res.redirect("/");
 
