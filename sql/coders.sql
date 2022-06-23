@@ -2,7 +2,9 @@ create table coders(
 	id serial not null primary key,
 	first_name text,
 	last_name text,
-	email text
+	email text,
+	github text,
+	unique(github)
 );
 
 insert into coders (first_name, last_name, email) values ('Alley', 'Mudle', 'amudle0@tripadvisor.com');

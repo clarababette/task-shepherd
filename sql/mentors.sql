@@ -2,7 +2,9 @@ create table mentors(
 	id serial not null primary key,
 	first_name text,
 	last_name text,
-	email text
+	email text,
+	github text,
+	unique(github)
 );
 
 insert into mentors (first_name, last_name, email) values ('Brooke', 'Lambdean', 'blambdean0@wired.com');
