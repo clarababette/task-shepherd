@@ -6,6 +6,7 @@ import './styles/mui-styles.scss';
 import Header from './Header';
 import { Box } from '@mui/material';
 import ScreenLoading from './ScreenLoading';
+import axios from 'axios';
 
 const CoderPage = React.lazy(() => import('./coder_view/CoderPage'));
 const MentorPage = React.lazy(() => import('./mentor_view/MentorPage'));
