@@ -46,7 +46,7 @@ const client_secret = process.env.GITHUB_CLIENT_SECRET
 
 app.get('/login/github', (req, res) => {
   const redirect_uri = process.env.GITHUB_REDIRECT_URI
-  res.set('Access-Control-Allow-Origin', 'http://github.com/');
+  res.set('Access-Control-Allow-Origin', '*');
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${
       process.env.GITHUB_CLIENT_ID
@@ -69,7 +69,7 @@ async function getAccessToken({ code, client_id, client_secret }) {
 }
 
 async function fetchGitHubUser(token) {
-  res.set('Access-Control-Allow-Origin', 'http://github.com/');
+  res.set('Access-Control-Allow-Origin', '*');
   return await axios.get("https://api.github.com/user", {
     headers: {
       Authorization: "token " + token
@@ -79,7 +79,7 @@ async function fetchGitHubUser(token) {
 }
 
 app.get('/login/auth', async (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http://github.com/');
+  res.set('Access-Control-Allow-Origin', '*');
   const code = req.query.code
   const access_token = await getAccessToken({ code, client_id, client_secret })
   const user = await fetchGitHubUser(access_token);
