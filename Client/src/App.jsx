@@ -6,19 +6,20 @@ import './styles/mui-styles.scss';
 import Header from './Header';
 import { Box } from '@mui/material';
 import ScreenLoading from './ScreenLoading';
-import axios from 'axios';
+import AxiosInstance from './AxiosInstance';
 
 const CoderPage = React.lazy(() => import('./coder_view/CoderPage'));
 const MentorPage = React.lazy(() => import('./mentor_view/MentorPage'));
 
 function App() {
+  const axios = AxiosInstance();
   const { colors } = useContext(AppContext) 
   const { setEmail, user, setUser } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
   useEffect(async () => {  
     await axios.get(`/login/auth`).then((res) => {
-      console.log(res.data);
+        console.log(res.data)
         setUser(res.data)
         setLoading(false)
       });
