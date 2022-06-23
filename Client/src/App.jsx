@@ -12,7 +12,7 @@ const MentorPage = React.lazy(() => import('./mentor_view/MentorPage'));
 
 function App() {
   const { colors } = useContext(AppContext) 
-  const { setEmail, user } = useContext(UserContext);
+  const { setEmail, user, setUser } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
   useEffect(async () => {  
