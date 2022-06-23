@@ -92,9 +92,9 @@ app.get('/login/auth', async (req, res) => {
 
 
 app.get('/user', async(req, res) => {
-  try {
-    
+  try { 
     const github = req.session.user.login;
+    console.log(github)
     let user = [];
     let result = await db.any('select * from coders where github = $1', github)
     if (result.length < 1) {
