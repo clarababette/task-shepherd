@@ -93,8 +93,7 @@ app.get('/login/auth', async (req, res) => {
 
 app.get('/user', async(req, res) => {
   try {
-    res.json(req.session.user)
-
+    
     const github = req.session.user.login;
     let user = [];
     let result = await db.any('select * from coders where github = $1', github)
@@ -103,7 +102,8 @@ app.get('/user', async(req, res) => {
       if (result.length > 0) {
         user = result[0];
         user.role = 'mentor'
-}
+      }
+    res.json(user)
     } else {
       user = result[0];
         user.role = 'coder'
