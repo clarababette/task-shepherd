@@ -17,7 +17,7 @@ function App() {
   const [emailInput, setEmailInput] = useState();
 
   useEffect(async () => {
-     await axios.get(`https://taskshepherd.herokuapp.com/login/github`).then((res) => {
+     await axios.get(`https://taskshepherd.herokuapp.com/login/github`, {mode:"cors"}).then((res) => {
         console.log(res.data)
       });
   })
