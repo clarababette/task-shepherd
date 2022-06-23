@@ -16,11 +16,7 @@ function App() {
   const { setEmail, user } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
-  useEffect( async () => {
-    await axios.get('/user').then((res) => {
-      console.log(res.data)
-    });
-  })
+ 
 
   if (!user) {
     return (<form onSubmit={(e) => {
