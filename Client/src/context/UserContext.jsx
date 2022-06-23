@@ -11,7 +11,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(async () => {
     if(email){
-      await axios.post(`/login/auth`).then((res) => {
+      await axios.get(`/login/auth`).then((res) => {
         setUser(res.data)
         setLoading(false)
       });
