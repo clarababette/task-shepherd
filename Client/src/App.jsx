@@ -13,10 +13,14 @@ const MentorPage = React.lazy(() => import('./mentor_view/MentorPage'));
 
 function App() {
   const { colors } = useContext(AppContext) 
-  const { setEmail, user } = useContext(UserContext);
+  const { setEmail, user, setUser } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
- 
+  useEffect( async () => {
+    await axios.get('/user').then((res) => {
+      setUser(res.data);
+    });
+  })
 
   if (!user) {
     return (<form onSubmit={(e) => {

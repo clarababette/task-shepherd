@@ -9,16 +9,19 @@ export const UserProvider = ({ children }) => {
   const [email, setEmail] = useState();
   const [loading, setLoading] = useState(false);
 
-   useEffect( async () => {
-    await axios.get('/user').then((res) => {
-      console.log(res.data)
-    });
-  },[])
+  useEffect(async () => {
+    if(email){
+      await axios.post(`user/login`, {email}).then((res) => {
+        setUser(res.data)
+        setLoading(false)
+      });
+}
+  }, [email]);
   
   return (
     <UserContext.Provider
       value={{
-        setEmail, user, loading, setLoading
+        setEmail, user, loading, setLoading, setUser
       }}
     >
       {children}

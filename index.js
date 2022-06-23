@@ -94,6 +94,24 @@ app.get('/login/auth', async (req, res) => {
 app.get('/user', (req, res) => {
   try {
     res.json(req.session.user)
+
+    const github = req.session.user.login;
+    let user = [];
+    let result = await db.any('select * from coders where github = $1', github)
+    if (result.length < 1) {
+      result = await db.any('select * from mentors where github = $1', github);
+      if (result.length > 0) {
+        user = result[0];
+        user.role = 'mentor'
+}
+    } else {
+      user = result[0];
+        user.role = 'coder'
+    }
+    res.json(user)
+
+
+
   } catch {
     res.send('no user')
   }
