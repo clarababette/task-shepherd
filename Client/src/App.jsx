@@ -1,32 +1,29 @@
 
-import React, { useState, useContext, Suspense, useEffect } from 'react';
+import React, { useState, useContext, Suspense } from 'react';
 import AppContext from './context/AppContext';
 import UserContext from './context/UserContext';
 import './styles/mui-styles.scss';
 import Header from './Header';
 import { Box } from '@mui/material';
 import ScreenLoading from './ScreenLoading';
-import AxiosInstance from './AxiosInstance';
 
 const CoderPage = React.lazy(() => import('./coder_view/CoderPage'));
 const MentorPage = React.lazy(() => import('./mentor_view/MentorPage'));
 
 function App() {
-  const axios = AxiosInstance();
   const { colors } = useContext(AppContext) 
-  const { setEmail, user, setUser } = useContext(UserContext);
+  const { setEmail, user } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
-  useEffect(async () => {  
-    await axios.get(`/login/auth`).then((res) => {
-        console.log(res.data)
-        setUser(res.data)
-        setLoading(false)
-      });
-  },);
-
   if (!user) {
-    window.location.replace('/login/github');
+    return (<form onSubmit={(e) => {
+          e.preventDefault();
+          setEmail(emailInput);
+      }}>
+        <h2>Enter email</h2>
+        <input type='text' onChange={(e) => { setEmailInput(e.target.value) }} />
+        <input type='submit'></input>
+      </form>)
   } else if (user.role == 'mentor') {
     return (
     <Suspense fallback={<ScreenLoading></ScreenLoading> }>
