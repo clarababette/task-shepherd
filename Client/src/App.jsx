@@ -18,7 +18,8 @@ function App() {
 
   useEffect( async () => {
     await axios.get('/user').then((res) => {
-      setUser(res.data);
+      if(res.data != 'no user') 
+      {setUser(res.data);}
     });
   },[])
 
