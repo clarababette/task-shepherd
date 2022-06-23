@@ -41,6 +41,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
 
 const client_id = process.env.GITHUB_CLIENT_ID
 const client_secret = process.env.GITHUB_CLIENT_SECRET
