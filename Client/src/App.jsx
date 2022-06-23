@@ -16,7 +16,7 @@ function App() {
   const [emailInput, setEmailInput] = useState();
 
   if (!user) {
-    location.href('/login/github');
+    window.location.replace('/login/github');
   } else if (user.role == 'mentor') {
     return (
     <Suspense fallback={<ScreenLoading></ScreenLoading> }>
