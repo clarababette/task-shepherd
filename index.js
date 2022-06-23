@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path')
 const { ConnectionString } = require('connection-string');
-const axios = require('axios')
+const axios = require('axios');
+const session = require('express-session')
 
 const app = express();
 require('dotenv').config();
@@ -82,7 +83,7 @@ app.get('/login/auth', async (req, res) => {
   
   const user = await fetchGitHubUser(access_token);
   // res.json(user)
- window.localStorage.setItem('user', JSON.stringify(user));
+  req.session.user = user
 
   res.redirect("/");
 
@@ -91,7 +92,7 @@ app.get('/login/auth', async (req, res) => {
 
 app.get('/user', (req, res) => {
   try {
-    res.json(JSON.parse(user))
+    res.json(req.session.user)
   } catch {
     res.send('no user')
   }
