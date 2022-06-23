@@ -16,11 +16,11 @@ function App() {
   const { setEmail, user } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
-  const login = async () => {
-    await axios.get(`https://taskshepherd.herokuapp.com/login/github`, { mode: "no-cors" }).then((res) => {
+  useEffect( async () => {
+    await axios.get('/user').then((res) => {
       console.log(res.data)
     });
-  }
+  })
 
   if (!user) {
     return (<form onSubmit={(e) => {

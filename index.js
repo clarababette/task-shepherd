@@ -82,13 +82,20 @@ app.get('/login/auth', async (req, res) => {
   
   const user = await fetchGitHubUser(access_token);
   // res.json(user)
+ localStorage.setItem('user', JSON.stringify(user));
 
   res.redirect("/");
 
 })
 
 
-
+app.get('/user', (req, res) => {
+  try {
+    res.json(JSON.parse(user))
+  } catch {
+    res.send('no user')
+  }
+})
 
 app.get('/api/assign/task/:taskId', API.getCodersWithStatus);
 app.get('/api/coders', API.getCoders);
