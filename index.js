@@ -44,6 +44,13 @@ app.use(express.urlencoded({ extended: false }));
 const client_id = process.env.GITHUB_CLIENT_ID
 const client_secret = process.env.GITHUB_CLIENT_SECRET
 
+let user;
+
+app.get('/', (req, res) => {
+  if (!user) { res.redirect('/login/github') }
+  console.log(user)
+})
+
 app.get('/login/github', (req, res) => {
   const redirect_uri = process.env.GITHUB_REDIRECT_URI
   res.redirect(
