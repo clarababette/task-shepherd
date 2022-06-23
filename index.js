@@ -77,6 +77,30 @@ async function fetchGitHubUser(token) {
   
 }
 
+app.get('/login/auth', async (req, res) => {
+  if (!req.query.code) res.redirect('/login/github');
+  const code = req.query.code
+  const access_token = await getAccessToken({ code, client_id, client_secret })
+  const githubDetails = await fetchGitHubUser(access_token);
+  console.log(githubDetails)
+  try {
+    let user = [];
+      let result = await db.any('select * from coders where github = $1', githubDetails.login)
+      if (result.length < 1) {
+        result = await db.any('select * from mentors where github = $1', githubDetails.login);
+        if (result.length > 0) {
+          user = result[0];
+          user.role = 'mentor'
+  }
+      } else {
+        user = result[0];
+          user.role = 'coder'
+      }
+    res.json(user)
+  } catch {
+    res.json();
+  }
+})
 app.get('/api/login/auth', async (req, res) => {
   if (!req.query.code) res.redirect('/login/github');
   const code = req.query.code
