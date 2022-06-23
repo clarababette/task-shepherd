@@ -20,7 +20,7 @@ function App() {
     await axios.get('/user').then((res) => {
       setUser(res.data);
     });
-  })
+  },[])
 
   if (!user) {
     return (<form onSubmit={(e) => {

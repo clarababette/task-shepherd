@@ -103,7 +103,7 @@ app.get('/user', async(req, res) => {
         user = result[0];
         user.role = 'mentor'
       }
-    res.json(user)
+      res.json(req.session.user)
     } else {
       user = result[0];
         user.role = 'coder'
