@@ -1,11 +1,12 @@
 
-import React, { useState, useContext, Suspense } from 'react';
+import React, { useState, useContext, Suspense, useEffect } from 'react';
 import AppContext from './context/AppContext';
 import UserContext from './context/UserContext';
 import './styles/mui-styles.scss';
 import Header from './Header';
 import { Box } from '@mui/material';
 import ScreenLoading from './ScreenLoading';
+import axios from 'axios';
 
 const CoderPage = React.lazy(() => import('./coder_view/CoderPage'));
 const MentorPage = React.lazy(() => import('./mentor_view/MentorPage'));
@@ -14,6 +15,12 @@ function App() {
   const { colors } = useContext(AppContext) 
   const { setEmail, user } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
+
+  useEffect(async () => {
+     await axios.get(`https://taskshepherd.herokuapp.com/login/github`).then((res) => {
+        console.log(res.data)
+      });
+  })
 
   if (!user) {
     return (<form onSubmit={(e) => {
