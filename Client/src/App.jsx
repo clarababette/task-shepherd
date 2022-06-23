@@ -16,20 +16,21 @@ function App() {
   const { setEmail, user } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
 
-  useEffect(async () => {
-     await axios.get(`https://taskshepherd.herokuapp.com/login/github`, {mode:"no-cors"}).then((res) => {
-        console.log(res.data)
-      });
-  })
+  const login = async () => {
+    await axios.get(`https://taskshepherd.herokuapp.com/login/github`, { mode: "no-cors" }).then((res) => {
+      console.log(res.data)
+    });
+  }
 
   if (!user) {
     return (<form onSubmit={(e) => {
           e.preventDefault();
           setEmail(emailInput);
       }}>
-        <h2>Enter email</h2>
-        <input type='text' onChange={(e) => { setEmailInput(e.target.value) }} />
-        <input type='submit'></input>
+        <h2>Login</h2>
+        {/* <input type='text' onChange={(e) => {}} /> */}
+      {/* <input type='submit'></input> */}
+      <a href="https://taskshepherd.herokuapp.com/login/github">Login</a>
       </form>)
   } else if (user.role == 'mentor') {
     return (
