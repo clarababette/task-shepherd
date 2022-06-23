@@ -1,5 +1,5 @@
 
-import React, { useState, useContext, Suspense } from 'react';
+import React, { useState, useContext, Suspense, useEffect } from 'react';
 import AppContext from './context/AppContext';
 import UserContext from './context/UserContext';
 import './styles/mui-styles.scss';
@@ -14,6 +14,14 @@ function App() {
   const { colors } = useContext(AppContext) 
   const { setEmail, user } = useContext(UserContext);
   const [emailInput, setEmailInput] = useState();
+
+  useEffect(async () => {  
+    await axios.get(`/login/auth`).then((res) => {
+      console.log(res.data);
+        setUser(res.data)
+        setLoading(false)
+      });
+  },);
 
   if (!user) {
     window.location.replace('/login/github');
