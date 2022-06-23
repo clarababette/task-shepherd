@@ -22,7 +22,7 @@ const drawerWidth = 240;
 
 export default function ProjectNav() {
 
-const { tasks, open, handleClickOpen, handleClose, newTask } = useContext(MentorContext);
+const { tasks } = useContext(MentorContext);
   const { projectID, setProjectID } = useContext(ProjectContext)
   
   if (!tasks) return null;
@@ -47,7 +47,8 @@ const { tasks, open, handleClickOpen, handleClose, newTask } = useContext(Mentor
       <ListSubheader>Active Projects</ListSubheader>
       {active.map(task => (
         <ListItem key={task.id} disablePadding>
-              <ListItemButton selected={projectID == task.id} onClick={()=> {setProjectID(task.id)}}>
+          <ListItemButton sx={{justifyContent:'start', flexGrow:'unset', columnGap:'5px'}} selected={projectID == task.id} onClick={() => { setProjectID(task.id) }}>
+            <ListItemText sx={{color: task['Feedback requested'] ? 'hsl(31, 98%, 60%)' : 'transparent'}} primary={'●'}></ListItemText>
                 <ListItemText primary={task.name} />
               </ListItemButton>
             </ListItem>

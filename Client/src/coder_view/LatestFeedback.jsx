@@ -1,14 +1,20 @@
 import { Card, Typography, Link } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useRef, useLayoutEffect } from 'react';
 import FocusTaskContext from '../context/FocusTaskContext';
 
 function LatestFeedback() {
-const { latestFeedback: feedback, viewAllFeedback, setViewAllFeedback } = useContext(FocusTaskContext);
+const { latestFeedback: feedback, viewAllFeedback, setViewAllFeedback, setLatestFBHeight } = useContext(FocusTaskContext);
+const ref = useRef()
+
+  useLayoutEffect(() => {
+    if(ref) setLatestFBHeight(ref.current.clientHeight)
+  })
+  
   
 if (!feedback) return null;
   const { first_name, comment, timestamp } = feedback
   return (
-    <Card sx={{padding:'1rem', display:'flex', flexDirection:'column', rowGap:'0.25rem', minWidth: '15rem', overflow:'scroll', marginTop:'0.5rem', gridRow:'2 / 3', gridColumn:'1 / 2',}}>
+    <Card ref={ref} sx={{padding:'1rem', display:'flex', flexDirection:'column', rowGap:'0.25rem', minWidth: '15rem', overflow:'scroll', marginTop:'0.5rem', gridRow:'2 / 3', gridColumn:'1 / 2',}}>
       <Typography variant='h6'>Latest Feedback</Typography>
       <Typography variant='body2' sx={{color:'hsl(200, 18%, 46%)'}}>Feedback given by {first_name} • {timestamp}</Typography>
       <Typography variant='body1' sx={{flexGrow:'1'}} className="feedback-text">{comment}</Typography>

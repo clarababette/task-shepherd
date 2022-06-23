@@ -63,13 +63,12 @@ function EditTask({ close }) {
 
 
   return (
-  <div className='create-task'>
+  <div className='edit-task'>
     <DialogTitle>Create Task</DialogTitle>
-    <Box component='form' className='new-task' onSubmit={handleSubmitEditTask}>
+    <Box component='form' onSubmit={handleSubmitEditTask}>
       <TextField
         required
         size='small'
-        sx={{gridColumn: 'span 2'}}
         label='Task name'
         value={name}
         onChange={(e) => {
@@ -79,7 +78,6 @@ function EditTask({ close }) {
 
       <TextField
         size='small'
-        sx={{gridColumn: 'span 2'}}
         label='Description'
         value={description}
         multiline
@@ -88,29 +86,33 @@ function EditTask({ close }) {
           setDescription(e.target.value);
         }}
       />
-      <Box sx={{gridColumn: 'span 2'}}>
+      <Box>
         <Typography>Additional Resources</Typography>
         {infoURLs.map((url, index) => (
-          <Box key={index} sx={{gridColumn: '1 / 2', width: '30em'}}>
+          <Box key={index}>
             <TextField
               size='small'
               label='Description'
+              value={url.description}
               type='text'
               onChange={(e) => {
                 const urls = [...infoURLs];
                 urls[index]['description'] = e.target.value;
                 setInfoURLs(urls);
               }}
+              sx={{margin:'10px'}}
             />
             <TextField
               size='small'
               label='URL'
               type='text'
+              value={url.address}
               onChange={(e) => {
                 const urls = [...infoURLs];
                 urls[index]['address'] = e.target.value;
                 setInfoURLs(urls);
               }}
+              sx={{margin:'10px'}}
             />
           </Box>
         ))}
@@ -123,7 +125,7 @@ function EditTask({ close }) {
           <AddCircleIcon />
         </IconButton>
       </Box>
-      <Box sx={{gridColumn: 'span 2'}}>
+      <Box>
         <Typography>Coder Submission Links</Typography>
         <FormGroup>
           
@@ -189,7 +191,6 @@ function EditTask({ close }) {
         variant='contained'
         type='submit'
         sx={{
-          gridColumn: 'span 2',
           width: 'fit-content',
           justifySelf: 'center',
         }}

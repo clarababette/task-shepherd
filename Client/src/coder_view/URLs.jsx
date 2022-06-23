@@ -41,6 +41,24 @@ function URLs() {
 
 
 
+  const icon = (link) => {
+    const style = {
+      margin: '0.5rem'
+    };
+    const size = 30
+    switch (link) {
+      case 'GitHub Pages':
+      case 'GitHub Repo':
+        return <BsGithub size={size} style={style} />;
+      case 'Heroku':
+        return <DiHeroku size={size} style={style} />;
+      case 'Travis CI':
+        return <SiTravisci size={size} style={style} />;
+      default:
+        return <HiLink size={size} style={style} />;
+    }
+  }
+
   if(!focusTask) return null
 
   return (
@@ -66,22 +84,30 @@ function URLs() {
             <CancelIcon />
           </IconButton>
         )}
- </Typography>
+      </Typography>
+      
       {!edit &&
-        focusTask.urls.map((url, index) => (
+        (<div style={{display:'flex', flexWrap:'wrap', columnGap:'0.5rem', rowGap:'0.5rem'}}>
+
+        {focusTask.urls.map((url, index) => (
           <Button
             variant='contained'
             disabled={url.address ? false : true}
             size='small'
-            sx={{}}
+            sx={{backgroundColor: 'hsl(149, 81%, 41%)', flexDirection:'column', width:'min-content'}}
             key={index}
             onClick={() => {
               window.open(url.address);
             }}
-          >
+            >
+            {icon(url.description)}
+            <Typography variant='overline' sx={{lineHeight:'1.5'}}>
             {url.description}
-          </Button>
-        ))}
+            </Typography>
+          </Button>))}
+            </div>
+          
+        )}
 
       {edit &&
         focusTask.urls.map((url) => (
@@ -92,12 +118,6 @@ function URLs() {
           ></URL>
         ))}
       {edit && <Button variant={btn.variant} sx={{ width: btn.width }} onClick={handleEditURL}>Save</Button>}
-      {/* <Box sx={{display:'flex', columnGap: '1rem', rowGap:'1rem',flexWrap:'wrap'}} >
-      <Button variant='contained'  disableElevation sx={{ flexDirection: 'column', rowGap:'0.25rem' }} ><BsGithub size={40} style={{paddingTop:'0.25rem'}} /><Typography>GitHub</Typography></Button>
-      <Button variant='contained'  disableElevation sx={{ flexDirection: 'column', rowGap:'0.25rem' }} ><DiHeroku size={40} style={{paddingTop:'0.25rem'}} /><Typography>Heroku</Typography></Button>
-      <Button variant='contained'  disableElevation sx={{ flexDirection: 'column' , rowGap:'0.25rem'}} ><SiTravisci size={40} style={{paddingTop:'0.25rem'}} /><Typography>Travis CI</Typography></Button>
-      <Button variant='contained'  disableElevation sx={{ flexDirection: 'column', rowGap:'0.25rem' }} ><HiLink size={40} style={{paddingTop:'0.25rem'}}/><Typography>A link</Typography></Button>
-    </Box> */}
     </Card>
   );
 }

@@ -45,7 +45,7 @@ const client_id = process.env.GITHUB_CLIENT_ID
 const client_secret = process.env.GITHUB_CLIENT_SECRET
 
 app.get('/login/github', (req, res) => {
-  const redirect_uri = 'https://gwi-task-manager.herokuapp.com/login/auth'
+  const redirect_uri = process.env.GITHUB_REDIRECT_URI
   res.redirect(
     `https://github.com/login/oauth/authorize?client_id=${
       process.env.GITHUB_CLIENT_ID
@@ -105,7 +105,9 @@ app.post('/api/assign/task/:taskId', API.assignTask);
 app.post('/api/update/feedback', API.updateFeedback);
 
 app.put('/api/edit-task/:taskId', API.editTask);
-
+app.get('/*', (req, res) => {
+  res.redirect('/');
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console

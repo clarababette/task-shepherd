@@ -10,6 +10,7 @@ import ReviewCard from "./ReviewCard";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TaskInfo from "./TaskInfo";
 
+
 export default function Project() {
   const { project, coders, statusSummary } = useContext(ProjectContext);
   const [reviewCard, setReviewCard] = useState(false);
@@ -26,10 +27,7 @@ export default function Project() {
     setOpen(false);
   };
 
-  const handleClickOpenReview = (id) => {
-    setFocusTaskID(id);
-    setReviewCard(true);
-  };
+
 
   const handleCloseReview = () => {
     setReviewCard(false);

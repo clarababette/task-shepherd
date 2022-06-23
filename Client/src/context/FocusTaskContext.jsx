@@ -1,4 +1,4 @@
-import {createContext, useState, useEffect} from 'react';
+import {createContext, useState, useEffect, useLayoutEffect} from 'react';
 import AxiosInstance from '../AxiosInstance';
 
 const FocusTaskContext = createContext({});
@@ -12,15 +12,22 @@ export const FocusTaskProvider = ({ children }) => {
   const [latestFeedback, setLatestFeedback] = useState();
   const [viewAllFeedback, setViewAllFeedback] = useState();
   const [urlEdit, setUrlEdit] = useState(false);
-  const [sent, setSent] = useState()
+  const [sent, setSent] = useState();
+  const [latestFBHeight, setLatestFBHeight] = useState();
+  const [infoHeight, setInfoHeight] = useState();
+  const [chatHeight, setChatHeight] = useState('unset');
 
-  
+
+
   useEffect(async () => {
     if (focusTaskID || update) {
       await axios.get(`/task/coder/${focusTaskID}`).then((res) => {
         setFocusTask(res.data);
         setUpdate(false);
       });
+    } else if (!focusTaskID) {
+      setFocusTask();
+      setComments();
     }
     }, [focusTaskID, update]);
 
@@ -59,7 +66,8 @@ export const FocusTaskProvider = ({ children }) => {
     <FocusTaskContext.Provider
       value={{
         focusTask, setFocusTask, focusTaskID, setFocusTaskID, comments, setUpdate, latestFeedback,
-        viewAllFeedback, setViewAllFeedback, urlEdit, setUrlEdit, sent, setSent
+        viewAllFeedback, setViewAllFeedback, urlEdit, setUrlEdit, sent, setSent,
+        setLatestFBHeight, chatHeight, setInfoHeight, latestFBHeight, infoHeight
       }}
     >
       {children}
