@@ -16,14 +16,7 @@ function App() {
   const [emailInput, setEmailInput] = useState();
 
   if (!user) {
-    return (<form onSubmit={(e) => {
-          e.preventDefault();
-          setEmail(emailInput);
-      }}>
-        <h2>Enter email</h2>
-        <input type='text' onChange={(e) => { setEmailInput(e.target.value) }} />
-        <input type='submit'></input>
-      </form>)
+    location.href('/login/github');
   } else if (user.role == 'mentor') {
     return (
     <Suspense fallback={<ScreenLoading></ScreenLoading> }>
