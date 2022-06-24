@@ -9,7 +9,8 @@ const handleLogin = (req, res) => {
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: '30s'}
     )
-    console.log(accessToken)
+  console.log(accessToken)
+  console.log('made it here')
     const refreshToken = jwt.sign(
     { "user": 'test' },
     process.env.REFRESH_TOKEN_SECRET,
