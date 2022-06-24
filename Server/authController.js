@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const handleLogin = () => {
   console.log('made it here')
-  if (!req.user) res.sendStatus(401);
+  if (!req.userDetails) res.sendStatus(401);
   const accessToken = jwt.sign(
     { "user": 'test' },
     process.env.ACCESS_TOKEN_SECRET,
@@ -15,7 +15,7 @@ const handleLogin = () => {
     { expiresIn: '1d'}
   )
   res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
-  res.json({ user, accessToken })
+  res.json({ userDetails, accessToken })
 }
 
 const verifyJWT = (req, res, next) => {
