@@ -95,7 +95,7 @@ app.get('/user', async(req, res) => {
   try { 
     const github = req.session.user.login;
     console.log(github)
-    let user = [];
+    let user;
     let result = await db.any('select * from coders where github = $1', github)
     if (result.length < 1) {
       result = await db.any('select * from mentors where github = $1', github);
@@ -107,6 +107,7 @@ app.get('/user', async(req, res) => {
       user = result[0];
         user.role = 'coder'
     }
+    console.log(result)
     res.json(user)
  } catch {
     res.send('no user')
