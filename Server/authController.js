@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const handleLogin = () => {
+  console.log('made it here')
   if (!req.user) res.sendStatus(401);
   const accessToken = jwt.sign(
     { "user": 'test' },
