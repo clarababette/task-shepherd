@@ -3,21 +3,19 @@ require('dotenv').config();
 
 const handleLogin = (req, res) => {
   if (!req.userDetails) return res.sendStatus('lLlL');
-  console.log(req.userDetails);
+  const details = req.userDetails;
   const accessToken = jwt.sign(
     { "user": 'test' },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: '30s'}
     )
-  console.log(accessToken)
-  console.log('made it here')
     const refreshToken = jwt.sign(
     { "user": 'test' },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: '1d'}
   )
   res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
-  res.json({ userDetails, accessToken })
+  res.json({ details, accessToken })
 }
 
 const verifyJWT = (req, res, next) => {
