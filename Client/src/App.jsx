@@ -18,6 +18,7 @@ function App() {
 
   useEffect( async () => {
     await axios.get('/user').then((res) => {
+      console.log(res.data)
       if(res.data != 'no user' && res.data.length > 0) 
       {setUser(res.data);}
     });
