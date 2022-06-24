@@ -2,15 +2,15 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const handleLogin = (req, res) => {
-  console.log('made it here')
   if (!req.userDetails) return res.sendStatus(401);
   console.log(req.userDetails);
   const accessToken = jwt.sign(
     { "user": 'test' },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: '30s'}
-  )
-  const refreshToken = jwt.sign(
+    )
+    console.log(accessToken)
+    const refreshToken = jwt.sign(
     { "user": 'test' },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: '1d'}
