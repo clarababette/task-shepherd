@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const handleLogin = () => {
   console.log('made it here')
-  if (!req.userDetails) res.sendStatus(401);
+  if (!req.userDetails) return res.sendStatus(401);
   const accessToken = jwt.sign(
     { "user": 'test' },
     process.env.ACCESS_TOKEN_SECRET,
