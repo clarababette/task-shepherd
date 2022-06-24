@@ -4,7 +4,7 @@ const moment = require('moment');
 function APIRoutes(db) {
 
 
-  const findUser = async (req, res) => {
+  const findUser = async (req, res, next) => {
     const params = req.params;
     if (!params?.github) return res.sendStatus(401);
     const github = params.github;
