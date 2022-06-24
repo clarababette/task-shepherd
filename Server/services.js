@@ -24,7 +24,7 @@ function APIRoutes(db) {
       req.userDetails = user;
       next()
     }
-    res.sendStatus(401)
+    if(!req.userDetails) res.sendStatus(401)
   }
 
   const getUser = async (req, res) => {
