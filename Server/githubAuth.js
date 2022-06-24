@@ -43,4 +43,4 @@ const githubUser = async (req, res) => {
   res.redirect(`/user/${user.login}`)
 }
 
-export { githubLogin, githubUser }
+module.exports = { githubLogin, githubUser }

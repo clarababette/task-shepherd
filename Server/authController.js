@@ -57,4 +57,4 @@ const handleLogout = (req, res) => {
   res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
 }
 
-export { handleLogin, verifyJWT, handleRefreshToken, handleLogout }
+module.exports = { handleLogin, verifyJWT, handleRefreshToken, handleLogout }
