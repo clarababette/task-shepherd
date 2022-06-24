@@ -4,6 +4,29 @@ const moment = require('moment');
 function APIRoutes(db) {
 
 
+  const findUser = async (req, res) => {
+    const params = req.params;
+    if (!params?.github) return res.sendStatus(401);
+    const github = params.github;
+    let user;
+    let result = await db.any('select * from coders where github = $1', github)
+    if (result.length < 1) {
+      result = await db.any('select * from mentors where github = $1', github);
+      if (result.length > 0) {
+        user = result[0];
+        user.role = 'mentor';
+        req.userDetails = user;
+        next()
+      }
+    } else {
+      user = result[0];
+      user.role = 'coder'
+      req.userDetails = user;
+      next()
+    }
+    res.sendStatus(401)
+  }
+
   const getUser = async (req, res) => {
     const email = req.body.email;
     let user = [];
@@ -260,7 +283,8 @@ const getCoderTask = async (req, res) => {
     editTask,
     getUser,
     updateFeedback,
-    getProject
+    getProject,
+    findUser,
   };
 }
 
