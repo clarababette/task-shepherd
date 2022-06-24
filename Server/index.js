@@ -1,9 +1,11 @@
 const express = require('express');
 const path = require('path')
 const { ConnectionString } = require('connection-string');
-import cookieParser from 'cookie-parser';
-import { handleLogin } from '../authController';
-import { githubLogin, githubUser } from '../githubAuth';
+
+const cookieParser = require('cookie-parser');
+const handleLogin = require('./authController').handleLogin;
+const githubLogin = require('./githubAuth').githubLogin;
+const githubUser = require('./githubAuth').githubUser;
 
 const app = express();
 require('dotenv').config();
